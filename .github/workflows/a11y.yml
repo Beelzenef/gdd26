@@ -21,7 +21,13 @@ jobs:
           npx -y http-server . -p 8080 &
           npx -y wait-on http://127.0.0.1:8080
 
-      - name: Run Accessibility Scanner
-        uses: github/accessibility-scanner@v3
-        with:
-          url: http://127.0.0.1:8080
+       - name: Run Accessibility Scanner
+         uses: github/accessibility-scanner@v3
+         with:
+-          url: http://127.0.0.1:8080
++          urls: |
++            http://127.0.0.1:8080
++          repository: ${{ github.repository }}
++          token: ${{ secrets.GH_TOKEN }}
++          cache_key: a11y-results.json
++          skip_copilot_assignment: true
