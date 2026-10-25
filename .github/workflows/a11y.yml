@@ -1,0 +1,11 @@
+name: Accessibility Scanner
+
+on:
+  workflow_dispatch
+
+jobs:
+  accessibility_scanner:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: github/accessibility-scanner@v3
