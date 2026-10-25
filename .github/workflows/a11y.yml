@@ -1,4 +1,4 @@
-name: Accessibility Scanner
+name: a11y scanner
 
 on:
   workflow_dispatch
@@ -8,4 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: github/accessibility-scanner@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node (for static server + wait-on)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Start static server
+        run: |
+          npx -y http-server . -p 8080 &
+          npx -y wait-on http://127.0.0.1:8080
+
+      - name: Run Accessibility Scanner
+        uses: github/accessibility-scanner@v3
+        with:
+          url: http://127.0.0.1:8080
